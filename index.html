@@ -1,0 +1,365 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>SNED 101 Accessible Exam</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Lexend:wght@500;700&display=swap">
+<style>
+/* Layout: one question per screen in a single reading column; a slim top bar holds progress and settings; the situation sits in its own box above the question it belongs to. */
+:root{
+  --bg:#F3F5F4; --surface:#FFFFFF; --ink:#132126; --muted:#4A5A5F; --line:#C3CFCD;
+  --brand:#0D4F5C; --brand-ink:#FFFFFF; --sit:#FFF6D9; --sit-line:#C99A12;
+  --pick:#0D4F5C; --pick-bg:#E1F0F1; --flag:#9B3D0B; --flag-bg:#FCEADF; --warn-bg:#FDEDEA; --warn:#A3241B; --ok:#11683F; --ok-bg:#DDF2E6; --focus:#C2187A;
+  --display:"Lexend","Atkinson Hyperlegible",Verdana,sans-serif; --body:"Atkinson Hyperlegible",Verdana,"Segoe UI",Arial,sans-serif;
+  --fs:19px; --lh:1.6;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1719; --surface:#172426; --ink:#EDF4F3; --muted:#A7BBBD; --line:#33484B; --brand:#86D3DE; --brand-ink:#08262C; --sit:#2E2610; --sit-line:#E2B84A;
+  --pick:#86D3DE; --pick-bg:#173A40; --flag:#FFB48A; --flag-bg:#3D2414; --warn-bg:#43201C; --warn:#FFA79E; --ok:#7FE0AE; --ok-bg:#123726; --focus:#FF8AD4; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1719; --surface:#172426; --ink:#EDF4F3; --muted:#A7BBBD; --line:#33484B; --brand:#86D3DE; --brand-ink:#08262C; --sit:#2E2610; --sit-line:#E2B84A;
+  --pick:#86D3DE; --pick-bg:#173A40; --flag:#FFB48A; --flag-bg:#3D2414; --warn-bg:#43201C; --warn:#FFA79E; --ok:#7FE0AE; --ok-bg:#123726; --focus:#FF8AD4; color-scheme:dark}
+html{font-size:var(--fs)}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--body); line-height:var(--lh)}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:10; background:var(--surface)}
+*,*::before,*::after{box-sizing:border-box}
+button,input,textarea{font:inherit; color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:4px solid var(--focus); outline-offset:3px}
+h1,h2,h3{font-family:var(--display); line-height:1.25; text-wrap:balance; margin:0}
+h1{font-size:1.8rem} h2{font-size:1.35rem} h3{font-size:1.08rem}
+p{margin:0}
+.gutter{padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px))}
+.col{max-width:44rem; margin:0 auto}
+.stack{display:grid; gap:1rem}
+.muted{color:var(--muted)}
+header.bar{position:sticky; top:env(safe-area-inset-top,0px); z-index:5; background:var(--surface); border-bottom:2px solid var(--line)}
+.bar .col{display:flex; align-items:center; gap:.6rem; flex-wrap:wrap; padding-block:.55rem}
+.bar .name{font-family:var(--display); font-weight:700; margin-right:auto}
+.tool{min-height:2.75rem; min-width:2.75rem; padding:0 .7rem; border:2px solid var(--ink); background:var(--surface); border-radius:.6rem; font-weight:700; display:inline-flex; align-items:center; gap:.35rem}
+.settings{background:var(--surface); border-bottom:2px solid var(--line)}
+.settings .col{display:flex; gap:1rem 1.5rem; flex-wrap:wrap; align-items:center; padding-block:.7rem}
+.settings label{display:flex; align-items:center; gap:.5rem; font-weight:700}
+.settings input[type=checkbox]{width:1.4rem; height:1.4rem}
+main{padding-block:1.2rem 5rem}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:.45rem; min-height:3.1rem; padding:.75rem 1.2rem; border-radius:.7rem; border:0; background:var(--brand); color:var(--brand-ink); font-weight:700}
+.btn.ghost{background:transparent; color:var(--ink); border:2px solid var(--ink)}
+.btn:disabled{opacity:.45; cursor:not-allowed}
+.row{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center}
+.row.split{justify-content:space-between}
+.card{background:var(--surface); border:2px solid var(--line); border-radius:.9rem; padding:1rem 1.1rem}
+.steps{list-style:none; margin:0; padding:0; display:grid; gap:.6rem; counter-reset:s}
+.steps li{display:grid; grid-template-columns:2.4rem 1fr; gap:.8rem; align-items:start; counter-increment:s}
+.steps li::before{content:counter(s); width:2.4rem; height:2.4rem; border-radius:50%; background:var(--brand); color:var(--brand-ink); display:grid; place-items:center; font-weight:700}
+.field{display:grid; gap:.35rem}
+.field label{font-weight:700}
+.field input{min-height:3rem; padding:.5rem .8rem; border:2px solid var(--ink); border-radius:.6rem; background:var(--surface)}
+.err{color:var(--warn); font-weight:700}
+.meter{display:flex; align-items:center; gap:.7rem}
+.meter .track{flex:1; height:.8rem; background:var(--surface); border:2px solid var(--ink); border-radius:1rem; overflow:hidden}
+.meter .track i{display:block; height:100%; background:var(--brand)}
+.meter b{white-space:nowrap; font-variant-numeric:tabular-nums}
+.sit{background:var(--sit); border:2px solid var(--sit-line); border-left-width:10px; border-radius:.8rem; padding:.85rem 1rem; display:grid; gap:.35rem}
+.sit .lab{display:flex; align-items:center; gap:.45rem; font-weight:700; font-size:.88rem; letter-spacing:.02em; text-transform:uppercase}
+.stem{font-size:1.18rem; line-height:1.45}
+.qnum{font-family:var(--display); font-weight:700; color:var(--muted)}
+.opts{list-style:none; margin:0; padding:0; display:grid; gap:.6rem}
+.opt{display:flex; gap:.8rem; align-items:flex-start; width:100%; text-align:left; background:var(--surface); border:2px solid var(--line); border-radius:.75rem; padding:.8rem .9rem; min-height:3.4rem}
+.opt:hover{border-color:var(--ink)}
+.opt .k{flex:none; width:2.1rem; height:2.1rem; border-radius:50%; border:2px solid var(--ink); display:grid; place-items:center; font-weight:700}
+.opt .t{flex:1; min-width:0}
+.opt .mine{display:block; font-weight:700; font-size:.88rem; color:var(--pick)}
+[hidden]{display:none!important}
+.opt[aria-checked="true"]{border:4px solid var(--pick); background:var(--pick-bg); padding:calc(.8rem - 2px) calc(.9rem - 2px)}
+.opt[aria-checked="true"] .k{background:var(--pick); border-color:var(--pick); color:var(--surface)}
+.flagbtn[aria-pressed="true"]{background:var(--flag-bg); border-color:var(--flag); color:var(--flag)}
+.term{background:none; border:0; padding:0; font-weight:700; text-decoration:underline dotted 2px; text-underline-offset:3px; color:inherit}
+.term[aria-expanded="true"]{background:var(--pick-bg); border-radius:.2rem}
+.def{display:block; margin:.35rem 0; padding:.5rem .75rem; border-left:5px solid var(--brand); background:var(--bg); border-radius:.3rem; font-weight:400; font-size:.95rem}
+.def b{display:block}
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(3.3rem,1fr)); gap:.4rem}
+.cell{min-height:3.1rem; border-radius:.5rem; border:2px solid var(--ink); background:var(--surface); font-weight:700; display:grid; place-items:center; line-height:1.1; font-size:.9rem; padding:.2rem; position:relative}
+.cell small{font-size:.75rem; font-weight:700}
+.cell.ans{background:var(--pick-bg); border-color:var(--pick)}
+.cell.empty{border-style:dashed}
+.cell.flag::after{content:"⚑"; position:absolute; top:-.45rem; right:-.3rem; background:var(--flag); color:var(--surface); border-radius:50%; width:1.2rem; height:1.2rem; font-size:.7rem; display:grid; place-items:center}
+.cell.cur{outline:3px solid var(--focus); outline-offset:2px}
+.legend{display:flex; gap:.5rem 1.2rem; flex-wrap:wrap; font-size:.88rem; color:var(--muted)}
+.legend span{display:inline-flex; align-items:center; gap:.35rem}
+.legend i{display:inline-block; width:1.1rem; height:1.1rem; border-radius:.25rem; border:2px solid var(--ink)}
+.legend .a{background:var(--pick-bg); border-color:var(--pick)} .legend .e{border-style:dashed}
+.notice{border-radius:.8rem; padding:.85rem 1rem; display:flex; gap:.7rem; align-items:flex-start}
+.notice.warn{background:var(--warn-bg); border:3px dashed var(--warn)}
+.notice.ok{background:var(--ok-bg); border:3px solid var(--ok)}
+.notice .sym{font-size:1.6rem; line-height:1; font-weight:700}
+textarea{width:100%; min-height:16rem; padding:.8rem; border:2px solid var(--ink); border-radius:.6rem; background:var(--surface); line-height:var(--lh); resize:vertical}
+.check{display:flex; gap:.6rem; align-items:flex-start}
+.check input{width:1.4rem; height:1.4rem; margin-top:.2rem; flex:none}
+details.rubric summary{cursor:pointer; font-weight:700; min-height:2.75rem; display:flex; align-items:center}
+.rub{display:grid; gap:.5rem; margin-top:.5rem}
+.rub div{display:grid; grid-template-columns:2.6rem 1fr; gap:.7rem; align-items:start}
+.rub b.s{width:2.6rem; height:2.6rem; border-radius:.5rem; background:var(--brand); color:var(--brand-ink); display:grid; place-items:center; font-family:var(--display)}
+.ansgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(4.4rem,1fr)); gap:.35rem; font-variant-numeric:tabular-nums}
+.ansgrid div{border:2px solid var(--line); border-radius:.4rem; padding:.25rem .4rem; display:flex; justify-content:space-between; gap:.3rem; background:var(--surface)}
+.ansgrid div.empty{border:2px dashed var(--warn); color:var(--warn)}
+.essay-out{white-space:pre-wrap; background:var(--surface); border:2px solid var(--line); border-radius:.6rem; padding:.8rem}
+kbd{border:2px solid var(--line); border-radius:.3rem; padding:0 .35rem; font-family:inherit; font-weight:700; background:var(--surface)}
+.keys{font-size:.85rem; color:var(--muted)}
+</style>
+<header class="bar">
+  <div class="col gutter">
+    <span class="name">SNED 101 Final Exam</span>
+    <button class="tool" id="smaller" aria-label="Make text smaller">A−</button>
+    <button class="tool" id="bigger" aria-label="Make text bigger">A+</button>
+    <button class="tool" id="opts" aria-expanded="false" aria-controls="settings">Settings</button>
+  </div>
+</header>
+<div class="settings" id="settings" hidden>
+  <div class="col gutter">
+    <label><input type="checkbox" id="spacing"> Wider line spacing</label>
+    <label><input type="checkbox" id="dark"> Dark colors</label>
+  </div>
+</div>
+<main class="gutter"><div class="col" id="app"></div></main>
+<script>
+// [situation ("" if none), question, A, B, C, D]  letter order matches the printed test
+const ITEMS=[
+["Two newborns with [[jaundice]] are in the same hospital [[ward]]. Baby A was born [[full-term]] and is getting phototherapy. Baby B was born [[premature]], has a [[blood type incompatibility]] with the mother, and was sent home with no [[follow-up]].","**Why** does Baby B have a greater risk of kernicterus?","Premature babies make more bilirubin because their red cells are larger","Blood type incompatibility damages the baby's brain before birth","Several risk factors add up while no one checks the bilirubin","Without phototherapy, jaundice spreads from the skin into the brain"],
+["A parent says, “It's only jaundice. It just makes the skin yellow.”","Which explanation should the teacher give?","Yellow skin shows the liver is failing, and this then hurts the brain","Bilirubin in the skin stops oxygen from reaching the baby's nerves","Jaundice weakens the body's defenses, so infections reach the brain","Very high bilirubin can cross into the brain and damage it"],
+["","Which order **correctly** shows how kernicterus happens?","Liver fails → red cells break down → bilirubin enters the skin nerves","Bilirubin builds up → it enters the skin → skin nerves reach the brain","Brain is injured at birth → bilirubin builds up → jaundice appears","Red cells break down → bilirubin builds up → it enters the brain"],
+["A mother asks why her newborn is lying under a special blue light.","What is the **best** answer?","The light helps lower the amount of bilirubin in the baby's blood","The light keeps the baby warm so the liver can work more quickly","The light repairs brain tissue that bilirubin has already damaged","The light gives the baby vitamin D to make the young bones strong"],
+["Two [[siblings]] both had severe jaundice as newborns. One was treated within a day and grew up typically. The other was treated late and now has hearing loss.","What does this case **best** show?","Jaundice causes disability when it lasts past the baby years","Finding and treating it in time can prevent kernicterus","The second child probably inherited kernicterus from a parent","Phototherapy works mainly for babies who are born full-term"],
+["A doctor's report says a newborn has “hyperbilirubinemia.”","What does this word mean?","Brain damage caused by bilirubin in the newborn","Too much bilirubin in the blood","Too few healthy red blood cells in the newborn","A swelling of the newborn's young liver"],
+["A nurse makes a list of newborns who need closer bilirubin checks.","In which group does **every** baby have a risk factor named in the lesson?","Premature; born by [[cesarean]]; high birth weight","Feeding difficulty; firstborn; born at home","Premature; feeding difficulty; treatment delayed","Blood type incompatibility; firstborn; born at night"],
+["A Grade 2 learner's school [[records]] show kernicterus at birth.","Think about the **most common** disability from kernicterus. Which check should the teacher make sure was done **first**?","A hearing evaluation","A vision screening test","An intellectual assessment","A motor skills check"],
+["A learner has hearing loss from kernicterus. The learner often misses directions during class discussion.","Which support fits this need **best**?","Seat the learner in the front row and speak more slowly and more loudly","Give spoken directions with visuals, and use an FM system if advised","Give large-print, high-contrast copies of each of the day's directions","Have a seatmate repeat each spoken direction to the learner"],
+["A learner with kernicterus has [[low vision]].","Which set of supports matches this need?","An FM system and sign language, together with visual supports","Adaptive seating, accessible desks, and regular physical therapy support","Large print, high contrast, and orientation and mobility training","Extra time to answer, and spoken directions repeated more slowly"],
+["A learner who had kernicterus often drops her pencil, slumps in her chair, and bumps into desks. The teacher thinks she is not paying attention.","Which explanation is **more accurate**?","Poor eyesight makes her misjudge how far the desks and pencils are","Movement difficulties are affecting writing, sitting, and moving around","She is probably bored and needs harder, more challenging tasks to stay focused","She needs stricter class rules about sitting and moving properly"],
+["A learner with kernicterus has hearing loss and a mild intellectual disability.","Which plan **best** matches the lesson?","A hearing plan first, then added learning support once the hearing has improved","Placement in a class for deaf learners, where hearing needs are addressed first","Multisensory lessons adapted to the learner, planned with family and therapists","The regular lesson plan, with extra homework to close the learning gaps"],
+["A parent asks if therapy will undo the brain damage from her child's kernicterus.","What is the **most accurate** answer?","Therapy can reverse the damage if it starts before the child begins school","The damage goes away on its own as the liver matures in early childhood","The damage may be permanent, but support can help the child do more","Repeated phototherapy can still repair the damage in the first few years"],
+["A school expects several new learners who had kernicterus.","Which step **best** matches the lesson's idea of inclusion?","Put them all in one class so the support services are easier to give","Find each learner's needs early and plan individual support for each one","Wait until the learners show difficulties before arranging any support","Give all of them the very same set of accommodations to keep things fair"],
+["Lito says “tat” for “cat.” Ana says, “Me go store yesterday.”","Which classification is **correct**?","Lito: language disorder; Ana: speech sound disorder","Lito: speech sound disorder; Ana: fluency disorder","Lito: fluency disorder; Ana: social communication disorder","Lito: speech sound disorder; Ana: language disorder"],
+["A Grade 3 learner speaks clearly and knows many words. But he talks for a long time about his own topic, ignores classmates' turns, and does not notice signs to stop.","Which disorder is **most likely**?","Expressive language disorder","Fluency disorder (stuttering)","Social communication disorder","Speech sound (articulation) disorder"],
+["A learner repeats sounds and stops often during oral reports. But her words are correct once they come out.","Which term fits?","Speech sound disorder, also called stuttering","Language disorder, also called stuttering","Fluency disorder, also called a lisp","Fluency disorder, also called stuttering"],
+["A learner often follows only the first part of directions that have several steps. The learner speaks in short, simple sentences with many grammar errors.","Which disorder does this pattern suggest?","Language disorder","Speech sound disorder","Fluency disorder","Social communication disorder"],
+["Maria's speech delay is linked to hearing loss from birth. Ben's speech problem began after a head injury from a fall.","How are these causes classified?","Maria's is acquired; Ben's is developmental","Maria's is developmental; Ben's is acquired","Both are acquired, since each has a medical cause","Both are developmental, as both began in childhood"],
+["","Which cause of a communication disorder is classified as **acquired**?","Meningitis at age three","Hearing loss from birth","A family history of delay","Limited language at home"],
+["","Which of these is a **speech** sign, not a **language** sign?","Trouble retelling a story","Few words for common things","A rough, strained voice","Frequent verb tense errors"],
+["A learner with a speech disorder has passing grades. But she eats alone because she cannot join her classmates' conversations.","Which effect does this show **most clearly**?","Classroom learning","Social interaction","Communication skills","Self-confidence"],
+["A learner who stutters gets stuck on a word during oral [[recitation]].","Which response is **best**?","Wait calmly and let him finish the word in his own time","Gently say the word he is stuck on so he can go on","Tell him to slow down, take a deep breath, and start the word again","Call on another learner to spare him from more stress"],
+["A child says, “I seed a big wabbit.”","Which teacher response follows the lesson's strategies?","“Not ‘seed.’ Say ‘saw’ again.”","“Let's practice ‘rabbit’ first.”","“Class, help her say it right.”","“Oh, you saw a big rabbit!”"],
+["A group will retell a story out loud. One member has a language disorder.","Which change is **best**?","Let the learner listen and skip the speaking part","Give picture cues and allow extra time to answer","Ask the learner to write the story down instead","Have a classmate say the learner's lines in the story for him"],
+["A teacher corrects every error that a learner with a speech sound disorder makes. Now the learner rarely speaks in class.","What **best** explains this?","His disorder has become worse, and he needs a new diagnosis","Constant correction has lowered his confidence to speak","He is choosing to stay quiet so he can avoid class work","The corrections are working, so fewer errors are heard"],
+["","When should the teacher work with a [[speech-language specialist]]?","When a difficulty continues even with classroom strategies","When the learner's English grade falls below passing","When classmates begin to tease the learner about his speech","When the parents ask the school to handle all therapy"],
+["","Which classroom rule **best** matches the lesson's idea of an inclusive classroom?","Learners with speech difficulties may skip their turn in recitation","Everyone waits until a speaker finishes, however long it takes","Only the teacher may help a classmate who gets stuck on a word","Oral answers are graded on clear pronunciation for all learners"],
+["Learner 1 had a brain injury at birth. His movement difficulty has stayed the same for years. Learner 2 walked normally at age 3, but now, at age 7, has trouble with stairs and falls often.","Which condition does **Learner 2** most likely have?","Cerebral palsy, because the weakness now affects his walking","Muscular dystrophy, because the weakness began at birth","Muscular dystrophy, because the weakness is getting worse","Cerebral palsy, because his brain injury is getting worse"],
+["A parent asks what causes muscular dystrophy.","Which answer is **correct**?","Gene changes that affect proteins needed for healthy muscle","Damage to the brain's movement areas before or during birth","Muscles weakened by too little activity in early childhood","An infection that slowly destroys the body's muscle tissue"],
+["A 5-year-old boy falls often, has trouble getting up from the floor, and has large [[calves]]. His weakness is getting worse quickly.","Which type is **most likely**?","Becker","Myotonic","Duchenne","Limb-girdle"],
+["A 15-year-old starts to show muscle weakness that gets worse slowly. The doctor says it is a milder form related to Duchenne.","Which type is this?","Myotonic","Limb-girdle","Duchenne","Becker"],
+["A learner has stiff muscles that make it hard to let go after gripping something. The doctor also finds heart problems.","Which type of muscular dystrophy fits **best**?","Becker","Duchenne","Limb-girdle","Myotonic"],
+["A father has an autosomal dominant form of muscular dystrophy. The family has four children.","Which statement is **most accurate**?","Exactly two of the four children will have it","Each child has about a 50% chance, boy or girl","Only the sons can inherit it from their father","Each child has a 25% chance, as one parent has it"],
+["Both parents are healthy, but their child has limb-girdle muscular dystrophy.","How can this happen?","One parent's single changed gene was enough to cause it","The child's lack of exercise caused the condition to start","The child got it from an infection as a young baby","Each parent carried one changed gene and passed it on"],
+["A Grade 1 learner pushes on his knees with his hands to stand up from the floor. He falls more each month.","What should the teacher do?","Write down the signs and refer the child to a doctor","Give more exercise to build up the child's leg muscles","Treat it as a habit and remind him to stand up properly","Wait a few months to see if he grows out of the clumsiness"],
+["Parents ask if daily exercise will cure their son's muscular dystrophy.","What is the **most accurate** answer?","There is no cure, but therapy and exercise can help slow it down","Hard daily exercise can rebuild the muscle that has been lost","Exercise should be stopped because it makes muscle loss faster","Gene therapy in early childhood can fully cure most forms of the condition"],
+["An 11-year-old with Duchenne muscular dystrophy has trouble breathing and gets tired quickly.","Which treatment from the lesson helps with this **most directly**?","Occupational therapy","Regular leg exercises","Physical therapy sessions","Heart and lung support"],
+["A Grade 4 learner with muscular dystrophy is tired by midmorning and has trouble finishing long written tests.","Which support fits **best**?","Give the same long test, but score it more easily than for the others","Give tests early in the day and allow oral or shorter tests","Excuse the learner from tests until his energy comes back","Let the learner finish the test at home over the weekend"],
+["A teacher used the same [[accommodation plan]] for a learner with Duchenne from Grade 1 to Grade 4.","What is the **main** problem?","The plan should have changed only if the grades had dropped","Accommodations should be reduced as the learner grows older","There is none, since keeping things the same is best for learners with MD","The plan may no longer fit, because the condition gets worse"],
+["A learner with Becker muscular dystrophy becomes quiet and pulls away when he can no longer keep up in [[PE]].","Which response is **best**?","Excuse him from PE and let him keep score for the class instead","Avoid talking about it so he is not reminded of his condition","Change the activity and give emotional support so he can join","Tell him to push harder so his muscles will get stronger"],
+["A learner blinks hard and shrugs his shoulders again and again during class. His teacher thinks he is being [[disrespectful]].","Which response shows an understanding of Tourette syndrome?","Ask him to stop once, then give a consequence if he does not","Treat the movements as possible tics, not misbehavior","Ignore it, since he is probably doing it to get attention","Move him to the back so others are not distracted by it"],
+["","Which set lists **only motor** tics?","Eye blinking, loud sniffing, facial grimacing","Head jerking, grunting, shoulder shrugging","Eye blinking, head jerking, shoulder shrugging","Throat clearing, facial grimacing, and hopping in place"],
+["During a lesson, a learner with Tourette syndrome repeats the last words the teacher said. Later, she copies a classmate's wave without meaning to.","How are these two tics classified, in order?","Echopraxia, then echolalia","Coprolalia, then echopraxia","Echolalia, then coprolalia","Echolalia, then echopraxia"],
+["","Which is an example of a **complex vocal** tic?","Suddenly repeating a phrase","Clearing the throat often in class","Making short grunts or squeaks","Touching objects again and again"],
+["A classmate says that everyone with Tourette syndrome shouts bad words.","Which correction is **accurate**?","Most people with TS have swearing tics, but only when stressed","People with TS swear on purpose to hide their tics","Swearing is a motor tic, so it is not a vocal tic","Only a few people with TS have swearing tics"],
+["A student says, “I feel a buildup, like before a sneeze, right before my shoulder jerks.”","What does this show about tics?","Tics often come after an urge","The jerk is a reaction to allergies","The student chooses when the tic happens","The jerk is caused by stress in class"],
+["A parent believes her strict parenting caused her son's Tourette syndrome.","What should the teacher explain?","Strict parenting can trigger TS in children who are naturally more sensitive","TS involves genes, brain chemistry, and environment, not parenting","TS comes mainly from stress the child felt in the early years","TS is caused by a single gene passed on from the father's side of the family"],
+["Tourette syndrome often runs in families.","What does this **most strongly** suggest?","The cause has a strong inherited part","Children learn tics by copying parents","The family's parenting style causes it","TS spreads through close, daily contact"],
+["","Which statement **best** describes the brain's role in Tourette syndrome?","Brain damage from high bilirubin levels in the days after birth","Brain injury from a lack of oxygen during labor and delivery","Differences in brain areas and chemicals such as dopamine","Slow shrinking of the brain that gets worse with age"],
+["A parent asks the school nurse for a blood test to confirm her son's Tourette syndrome.","What is the **best** response?","A blood test of dopamine levels can confirm the diagnosis","A brain scan is needed to see which brain area causes the tics","There is no lab test; a neurologist diagnoses it by checking","A genetic test of both parents will give the final answer"],
+["","Which child meets the rules for diagnosing Tourette syndrome given in the lesson?","Age 9; tics for 14 months; began at 8","Age 7; tics for 6 months; began at 6","Age 20; tics for 13 months; began at 19","Age 12; tics for 3 weeks; began at 12"],
+["A learner with Tourette syndrome is restless and has trouble paying attention. He also checks again and again that his bag is closed.","What is the **best** explanation?","These are all complex motor tics that are part of his TS","His TS diagnosis is probably wrong and should be done again","These behaviors are side effects of his tic medicine","He may also have other conditions, such as ADHD or OCD"],
+["A 12-year-old with Tourette syndrome wants to learn ways to control his tics better.","Which approach fits this goal?","Occupational therapy (OT)","Speech-language therapy (SLT)","Behavioral therapy (CBIT)","Physical therapy for tics"],
+["During a quiz, a learner's vocal tics make some classmates laugh.","What is the **best** response from the teacher?","Stay calm, ignore the tics, and teach the class about TS later","Ask the learner to try to hold in the tics until the quiz is finished","Send the learner to the guidance office whenever tics happen","Scold the classmates who laughed in front of the whole class"]
+];
+
+const G={
+ jaundice:["Jaundice","Yellow skin and eyes in a newborn."],
+ ward:["Ward","A large room in a hospital where patients stay."],
+ "full-term":["Full-term","Born at the expected time, after a complete pregnancy."],
+ premature:["Premature","Born too early, before the expected time."],
+ "blood type incompatibility":["Blood type incompatibility","The baby's blood type does not match the mother's blood type."],
+ "follow-up":["Follow-up","A later check by a doctor or nurse."],
+ siblings:["Siblings","Brothers and sisters."],
+ cesarean:["Cesarean","A birth where the doctor delivers the baby through an operation."],
+ records:["Records","Written files about a learner's health and school history."],
+ "low vision":["Low vision","Eyesight that stays poor even with glasses."],
+ recitation:["Recitation","Reading or answering out loud in front of the class."],
+ "speech-language specialist":["Speech-language specialist","A professional who helps children with speech and language."],
+ calves:["Calves","The muscles at the back of the lower legs."],
+ "accommodation plan":["Accommodation plan","A written list of the changes and supports a learner gets in school."],
+ pe:["PE","Physical Education class."],
+ disrespectful:["Disrespectful","Rude; not showing respect."]
+};
+const N=ITEMS.length, TOTAL=N;
+const app=document.getElementById("app");
+const KEYS="sned101-exam-v1";
+const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const blank=()=>({name:"",started:false,finished:false,finishedAt:null,i:0,ans:Array(N).fill(null),flags:[]});
+let S=Object.assign(blank(),store.get(KEYS,{}));
+const save=()=>store.set(KEYS,S);
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+let uid=0;
+function rich(s){
+  return esc(s).replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g,(m,w,k)=>{
+    const g=G[(k||w).toLowerCase()]; if(!g) return w; const id="w"+(++uid);
+    return `<button class="term" type="button" aria-expanded="false" aria-controls="${id}">${w}</button><span class="def" id="${id}" hidden><b>${esc(g[0])}</b>${esc(g[1])}</span>`;
+  });
+}
+app.addEventListener("click",e=>{const t=e.target.closest(".term");if(!t)return;const d=document.getElementById(t.getAttribute("aria-controls"));const o=t.getAttribute("aria-expanded")==="true";t.setAttribute("aria-expanded",!o);d.hidden=o;});
+const answered=()=>S.ans.filter(a=>a!==null).length;
+
+
+/* settings */
+let fs=store.get("sned101-fs",19);
+const root=document.documentElement;
+const applyFs=()=>root.style.setProperty("--fs",fs+"px");applyFs();
+document.getElementById("bigger").onclick=()=>{fs=Math.min(28,fs+2);applyFs();store.set("sned101-fs",fs)};
+document.getElementById("smaller").onclick=()=>{fs=Math.max(15,fs-2);applyFs();store.set("sned101-fs",fs)};
+const optsBtn=document.getElementById("opts"),setPanel=document.getElementById("settings");
+optsBtn.onclick=()=>{const o=setPanel.hidden;setPanel.hidden=!o;optsBtn.setAttribute("aria-expanded",o)};
+const sp=document.getElementById("spacing"),dk=document.getElementById("dark");
+sp.checked=store.get("sned101-sp",false); dk.checked=store.get("sned101-dk",false);
+const applySet=()=>{root.style.setProperty("--lh",sp.checked?"1.95":"1.6"); if(dk.checked)root.setAttribute("data-theme","dark"); else root.removeAttribute("data-theme")};
+applySet(); sp.onchange=()=>{store.set("sned101-sp",sp.checked);applySet()}; dk.onchange=()=>{store.set("sned101-dk",dk.checked);applySet()};
+
+/* views */
+let view=S.finished?"done":S.started?"q":"start", showMap=false, reviewWarn=false, clearAsk=false;
+function render(){({start,q,review,done})[view]();}
+
+function start(){
+  app.innerHTML=`<div class="stack">
+    <h1>SNED 101 Final Exam</h1>
+    <p class="muted">Holy Cross of Davao College · Lessons 9–12 · Accessible online version</p>
+    <div class="notice ok"><span class="sym" aria-hidden="true">👀</span><p><b>Everything is in writing.</b> This page uses no sound. Your answers are saved on this device as you go.</p></div>
+    <section class="card stack">
+      <h2>How to take this exam</h2>
+      <ol class="steps">
+        <li><span>There are <b>55 multiple-choice questions</b>.</span></li>
+        <li><span>Many questions start with a yellow <b>Situation</b> box. Read it first. Then read the question below it.</span></li>
+        <li><span>Choose <b>one</b> answer: A, B, C, or D. Your choice gets a thick border and the words “Your answer.”</span></li>
+        <li><span>A <span style="font-weight:700;text-decoration:underline dotted 2px;text-underline-offset:3px">dotted word</span> has word help. Select it to see what it means.</span></li>
+        <li><span>Not sure? Select <b>⚑ Check later</b>. You can come back to it.</span></li>
+        <li><span>Select <b>All questions</b> any time to see which ones you answered.</span></li>
+        <li><span>When you are done, select <b>Review and finish</b>. Then copy your answers and send them to your teacher.</span></li>
+      </ol>
+      <p class="muted">You can change the text size and spacing with the buttons at the top.</p>
+    </section>
+    <div class="field"><label for="nm">Your full name</label><input id="nm" autocomplete="name" value="${esc(S.name)}"><span class="err" id="nmerr" hidden>Type your name to start.</span></div>
+    <div class="row"><button class="btn" id="go">${S.started?"Continue the exam":"Start the exam"}</button></div>
+  </div>`;
+  const nm=document.getElementById("nm");
+  document.getElementById("go").onclick=()=>{const v=nm.value.trim();if(!v){document.getElementById("nmerr").hidden=false;nm.focus();return}S.name=v;S.started=true;save();view="q";render();window.scrollTo(0,0)};
+  nm.addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("go").click()});
+}
+
+function mapHTML(){
+  const cells=[];
+  for(let i=0;i<TOTAL;i++){
+    const has=S.ans[i]!==null, fl=S.flags.includes(i);
+    const lab=S.ans[i]||"—";
+    cells.push(`<button class="cell ${has?"ans":"empty"} ${fl?"flag":""} ${i===S.i?"cur":""}" data-go="${i}" aria-label="Question ${i+1}, ${has?"answered":"not answered"}${fl?", marked to check later":""}">${i+1}<small>${lab}</small></button>`);
+  }
+  return `<section class="card stack" aria-label="All questions"><div class="row split"><h3>All questions</h3><span class="muted">${answered()} of ${N} answered</span></div>
+    <div class="legend"><span><i class="a"></i>Answered</span><span><i class="e"></i>Not answered</span><span>⚑ Check later</span></div>
+    <div class="grid">${cells.join("")}</div></section>`;
+}
+
+function q(){
+  const i=S.i, done=answered();
+  const it=ITEMS[i], sel=S.ans[i];
+  const body=`${it[0]?`<div class="sit"><span class="lab"><span aria-hidden="true">📋</span> Situation</span><p>${rich(it[0])}</p></div>`:""}
+      <div class="stack" style="gap:.5rem"><span class="qnum">Question ${i+1}</span><p class="stem" id="stem">${rich(it[1])}</p></div>
+      <ul class="opts" role="radiogroup" aria-labelledby="stem">${["A","B","C","D"].map((L,j)=>`<li><button class="opt" role="radio" aria-checked="${sel===L}" data-l="${L}"><span class="k">${L}</span><span class="t">${sel===L?`<span class="mine">✓ Your answer</span>`:""}${rich(it[2+j])}</span></button></li>`).join("")}</ul>`;
+  app.innerHTML=`<div class="stack">
+    <div class="meter"><b>Question ${i+1} of ${TOTAL}</b><div class="track" role="progressbar" aria-label="Questions answered" aria-valuemin="0" aria-valuemax="${TOTAL}" aria-valuenow="${done}"><i style="width:${done/TOTAL*100}%"></i></div><b>${done} done</b></div>
+    <div class="row"><button class="tool flagbtn" id="flag" aria-pressed="${S.flags.includes(i)}">⚑ ${S.flags.includes(i)?"Marked: check later":"Check later"}</button><button class="tool" id="map" aria-expanded="${showMap}">All questions</button></div>
+    ${showMap?mapHTML():""}
+    ${body}
+    <div class="row split">
+      <button class="btn ghost" id="prev" ${i===0?"disabled":""}>← Previous</button>
+      ${i<N-1?`<button class="btn" id="next">Next →</button>`:`<button class="btn" id="rev">Review and finish</button>`}
+    </div>
+    ${i<N-1?`<div class="row"><button class="btn ghost" id="rev">Review and finish</button></div>`:""}
+    <p class="keys">Keyboard: press <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd> to choose. <kbd>←</kbd> <kbd>→</kbd> move between questions.</p>
+  </div>`;
+  app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>choose(b.dataset.l));
+  app.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>go(+b.dataset.go));
+  document.getElementById("flag").onclick=()=>{const k=S.flags.indexOf(i);k>-1?S.flags.splice(k,1):S.flags.push(i);save();q()};
+  document.getElementById("map").onclick=()=>{showMap=!showMap;q()};
+  document.getElementById("prev").onclick=()=>go(i-1);
+  const nx=document.getElementById("next"); if(nx) nx.onclick=()=>go(i+1);
+  document.getElementById("rev").onclick=()=>{view="review";reviewWarn=false;render();window.scrollTo(0,0)};
+}
+function choose(L){S.ans[S.i]=L;save();q();const b=app.querySelector(`.opt[data-l="${L}"]`);if(b)b.focus()}
+function go(n){if(n<0||n>=TOTAL)return;S.i=n;save();view="q";q();window.scrollTo(0,0)}
+
+function review(){
+  const empty=S.ans.map((a,i)=>a===null?i+1:0).filter(Boolean), flagged=S.flags.slice().sort((a,b)=>a-b).map(i=>i+1);
+  app.innerHTML=`<div class="stack">
+    <h2>Review your answers</h2>
+    <p>Check your answers before you finish. Select a number to go back to that question.</p>
+    ${empty.length?`<div class="notice warn"><span class="sym" aria-hidden="true">!</span><p><b>${empty.length} not answered:</b> ${empty.join(", ")}</p></div>`:`<div class="notice ok"><span class="sym" aria-hidden="true">✓</span><p><b>All 55 questions are answered.</b></p></div>`}
+    ${flagged.length?`<div class="notice warn"><span class="sym" aria-hidden="true">⚑</span><p><b>Marked to check later:</b> ${flagged.join(", ")}</p></div>`:""}
+    ${mapHTML()}
+    ${reviewWarn?`<div class="notice warn" role="alert"><span class="sym" aria-hidden="true">!</span><div class="stack" style="gap:.6rem"><p><b>Are you sure?</b> After you finish, you cannot change your answers.</p><div class="row"><button class="btn" id="yes">Yes, finish the exam</button><button class="btn ghost" id="no">No, go back</button></div></div></div>`:
+    `<div class="row split"><button class="btn ghost" id="back">← Back to questions</button><button class="btn" id="fin">Finish the exam</button></div>`}
+  </div>`;
+  app.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>go(+b.dataset.go));
+  const f=document.getElementById("fin"); if(f) f.onclick=()=>{reviewWarn=true;review();document.getElementById("yes").focus()};
+  const bk=document.getElementById("back"); if(bk) bk.onclick=()=>{view="q";render()};
+  const y=document.getElementById("yes"); if(y) y.onclick=()=>{S.finished=true;S.finishedAt=new Date().toLocaleString();save();view="done";render();window.scrollTo(0,0)};
+  const no=document.getElementById("no"); if(no) no.onclick=()=>{reviewWarn=false;review()};
+}
+
+function summaryText(){
+  const lines=[];
+  for(let r=0;r<N;r+=10) lines.push(S.ans.slice(r,r+10).map((a,j)=>`${r+j+1}-${a||"_"}`).join("  "));
+  const empty=S.ans.map((a,i)=>a===null?i+1:0).filter(Boolean);
+  return `SNED 101 Final Exam, Lessons 9-12 (accessible online version)\nName: ${S.name}\nFinished: ${S.finishedAt}\n\nANSWERS\n${lines.join("\n")}\nNot answered: ${empty.length?empty.join(", "):"none"}\n`;
+}
+function done(){
+  const empty=S.ans.filter(a=>a===null).length;
+  app.innerHTML=`<div class="stack">
+    <div class="notice ok"><span class="sym" aria-hidden="true">✓</span><div><h2>You finished the exam</h2><p>Now send your answers to your teacher.</p></div></div>
+    <section class="card stack"><h3>Send your answers</h3>
+      <ol class="steps"><li><span>Select <b>Copy my answers</b>.</span></li><li><span>Paste them in a message to your teacher and send it.</span></li><li><span>If copying does not work, take a screenshot of this page and send it.</span></li></ol>
+      <div class="row"><button class="btn" id="copy">Copy my answers</button></div>
+      <p id="copymsg" role="status" aria-live="polite"></p>
+    </section>
+    <section class="card stack" aria-label="Your answers">
+      <p><b>Name:</b> ${esc(S.name)}<br><b>Finished:</b> ${esc(S.finishedAt)}<br><b>Answered:</b> ${N-empty} of ${N}${empty?` · <span class="err">${empty} not answered (shown with a dashed red box)</span>`:""}</p>
+      <div class="ansgrid">${S.ans.map((a,i)=>`<div class="${a?"":"empty"}"><span>${i+1}</span><b>${a||"—"}</b></div>`).join("")}</div>
+      <textarea id="sumtext" readonly hidden aria-label="Your answers as text"></textarea>
+    </section>
+    ${clearAsk?`<div class="notice warn" role="alert"><span class="sym" aria-hidden="true">!</span><div class="stack" style="gap:.6rem"><p><b>Clear this device?</b> This deletes these answers from this device. Do this only after your teacher has your answers.</p><div class="row"><button class="btn" id="clrYes">Yes, clear it</button><button class="btn ghost" id="clrNo">No, keep the answers</button></div></div></div>`:
+    `<div class="row"><button class="btn ghost" id="clr">Clear this device for the next person</button></div>`}
+  </div>`;
+  const text=summaryText(), ta=document.getElementById("sumtext"), msg=document.getElementById("copymsg");
+  document.getElementById("copy").onclick=()=>{
+    const fallback=()=>{ta.value=text;ta.hidden=false;ta.focus();ta.select();msg.innerHTML="<b>Your answers are selected in the box below.</b> Copy them with your device's Copy command.";};
+    try{navigator.clipboard.writeText(text).then(()=>{msg.innerHTML="<b>✓ Copied.</b> Paste it in a message to your teacher."},fallback)}catch(e){fallback()}
+  };
+  const c=document.getElementById("clr"); if(c) c.onclick=()=>{clearAsk=true;done()};
+  const cy=document.getElementById("clrYes"); if(cy) cy.onclick=()=>{store.del(KEYS);S=blank();clearAsk=false;view="start";render();window.scrollTo(0,0)};
+  const cn=document.getElementById("clrNo"); if(cn) cn.onclick=()=>{clearAsk=false;done()};
+}
+
+document.addEventListener("keydown",e=>{
+  if(view!=="q"||e.ctrlKey||e.metaKey||e.altKey) return;
+  const tg=document.activeElement&&document.activeElement.tagName; if(tg==="TEXTAREA"||tg==="INPUT") return;
+  const k=e.key.toUpperCase();
+  if(["A","B","C","D"].includes(k)){choose(k)}
+  if(e.key==="ArrowRight"&&S.i<N-1){go(S.i+1)}
+  if(e.key==="ArrowLeft"&&S.i>0){go(S.i-1)}
+});
+render();
+</script>
+
+</body></html>
